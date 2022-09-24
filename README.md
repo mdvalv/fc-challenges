@@ -1,11 +1,8 @@
-# Full Cycle Go Image
+# Full Cycle Challenges
 
-This image was built for Full Cycle course. It'll simply print `Full Cycle Rocks! =D` upon execution.
+[[_TOC_]]
 
-To run it, do the following:
+## Docker
 
-```sh
-docker run --rm mdval/fc-go-hello
-```
-
-Docker hub: https://hub.docker.com/repository/docker/mdval/fc-go-hello
+- [go](docker/challenge-1-go/)
+- [node](docker/challenge-2-node/)
