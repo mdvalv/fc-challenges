@@ -1,4 +1,4 @@
-# Full Cycle Go Image
+# Full Cycle Go Image Challenge
 
 This image was built for Full Cycle course. It'll simply print `Full Cycle Rocks! =D` upon execution.
 

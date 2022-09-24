@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: fc-mysql
+    ports:
+      - 3306:3306
+    restart: always
+    volumes:
+      - ./mysql/create_people_table.sql:/docker-entrypoint-initdb.d/init-script.sql
+      - fc-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: fc-db
+    networks:
+      - fc-network
+
+  node:
+    build:
+      context: ./node
+    container_name: fc-node
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: pass
+      DB_DATABASE: fc-db
+    volumes:
+      - ./node:/app
+    working_dir: /app
+    entrypoint: dockerize -wait tcp://mysql:3306 -timeout 30s ./entrypoint.sh
+    depends_on:
+      - mysql
+    networks:
+      - fc-network
+
+  nginx:
+    image: nginx:1.23.1-alpine
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    ports:
+      - 8080:8080
+    networks:
+      fc-network:
+
+volumes:
+  fc-mysql-data:
+
+networks:
+  fc-network:
