@@ -38,11 +38,13 @@ services:
     image: nginx:1.23.1-alpine
     restart: always
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - 8080:8080
+      - 8080:80
     networks:
-      fc-network:
+      - fc-network
+    depends_on:
+      - node
 
 volumes:
   fc-mysql-data:
